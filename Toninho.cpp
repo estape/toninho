@@ -19,74 +19,91 @@ void Toninho::ligar()
     pinMode(_EngineLeftReverse, OUTPUT);
     pinMode(_EngineRight, OUTPUT);
     pinMode(_EngineRightReverse, OUTPUT);
-    //pinMode(_speedInputPin, INPUT);
-    //pinMode(_speedOutputPin, OUTPUT);
-    //pinMode(_directionInputPin, INPUT);
+    // pinMode(_speedInputPin, INPUT);
+    // pinMode(_speedOutputPin, OUTPUT);
+    // pinMode(_directionInputPin, INPUT);
 }
 
-void Toninho::moverFrente()
+void Toninho::moverFrente(int velocidade)
 {
-    digitalWrite(_EngineLeft, HIGH);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, HIGH);
-    digitalWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, velocidade);
+    analogWrite(_EngineLeftReverse, 0);
+    analogWrite(_EngineRight, velocidade);
+    analogWrite(_EngineRightReverse, 0);
 }
 
-void Toninho::moverTras()   
+void Toninho::moverTras(int velocidade)
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, HIGH);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, HIGH);
+    analogWrite(_EngineLeft, 0);
+    analogWrite(_EngineLeftReverse, velocidade);
+    analogWrite(_EngineRight, 0);
+    analogWrite(_EngineRightReverse, velocidade);
 }
 
 // Não vai deixar "dois positivos"?
 void Toninho::ativarFreios()
 {
-    digitalWrite(_EngineLeft, HIGH);
-    digitalWrite(_EngineLeftReverse, HIGH);
-    digitalWrite(_EngineRight, HIGH);
-    digitalWrite(_EngineRightReverse, HIGH);
+    analogWrite(_EngineLeft, 0);
+    analogWrite(_EngineLeftReverse, 0);
+    analogWrite(_EngineRight, 0);
+    analogWrite(_EngineRightReverse, 0);
 }
 
-void Toninho::desligarMotores()
+void Toninho::virarEsquerda(int velocidade)
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, LOW);
+    analogWrite(_EngineLeftReverse, LOW);
+    analogWrite(_EngineRight, HIGH);
+    analogWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::virarEsquerda()
+void Toninho::virarDireita(int velocidade)
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, HIGH);
-    digitalWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, HIGH);
+    analogWrite(_EngineLeftReverse, LOW);
+    analogWrite(_EngineRight, LOW);
+    analogWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::virarDireita()
+void Toninho::virarEsquerdaTras(int velocidade)
 {
-    digitalWrite(_EngineLeft, HIGH);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, LOW);
+    analogWrite(_EngineLeftReverse, LOW);
+    analogWrite(_EngineRight, LOW);
+    analogWrite(_EngineRightReverse, HIGH);
 }
 
-void Toninho::virarEsquerdaTras()
+void Toninho::virarDireitaTras(int velocidade)
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, HIGH);
+    analogWrite(_EngineLeft, LOW);
+    analogWrite(_EngineLeftReverse, HIGH);
+    analogWrite(_EngineRight, LOW);
+    analogWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::virarDireitaTras()
+void Toninho::girarHorario(int velocidade, int numGiros)
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, HIGH);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, LOW);
+
+    while (numGiros < 5)
+    {
+        analogWrite(_EngineLeft, velocidade);
+        analogWrite(_EngineLeftReverse, 0);
+        analogWrite(_EngineRight, 0);
+        analogWrite(_EngineRightReverse, velocidade);
+
+        i++;
+    }
+}
+
+void Toninho::girarAntiHorario(int velocidade, int numGiro)
+{
+    while (numGiro)
+    {
+        analogWrite(_EngineLeft, 0);
+        analogWrite(_EngineLeftReverse, velocidade);
+        analogWrite(_EngineRight, velocidade);
+        analogWrite(_EngineRightReverse, 0);
+    }
 }
 
 /*boolean Toninho::updateDirection()
