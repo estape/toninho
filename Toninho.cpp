@@ -7,10 +7,6 @@ Toninho::Toninho(int EngineLeft, int EngineLeftReverse, int EngineRight, int Eng
     _EngineLeftReverse = EngineLeftReverse;
     _EngineRight = EngineRight;
     _EngineRightReverse = EngineRightReverse;
-    //_speedInputPin = speedInputPin;
-    //_speedOutputPin = speedOutputPin;
-    //_directionInputPin = directionInputPin;
-    //_directionInputMargin = directionInputMargin;
 }
 
 void Toninho::ligar()
@@ -19,9 +15,6 @@ void Toninho::ligar()
     pinMode(_EngineLeftReverse, OUTPUT);
     pinMode(_EngineRight, OUTPUT);
     pinMode(_EngineRightReverse, OUTPUT);
-    // pinMode(_speedInputPin, INPUT);
-    // pinMode(_speedOutputPin, OUTPUT);
-    // pinMode(_directionInputPin, INPUT);
 }
 
 void Toninho::moverFrente(int velocidade)
@@ -40,7 +33,6 @@ void Toninho::moverTras(int velocidade)
     analogWrite(_EngineRightReverse, velocidade);
 }
 
-// Não vai deixar "dois positivos"?
 void Toninho::ativarFreios()
 {
     analogWrite(_EngineLeft, 0);
@@ -51,40 +43,41 @@ void Toninho::ativarFreios()
 
 void Toninho::virarEsquerda(int velocidade)
 {
-    analogWrite(_EngineLeft, LOW);
-    analogWrite(_EngineLeftReverse, LOW);
-    analogWrite(_EngineRight, HIGH);
-    analogWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, 0);
+    analogWrite(_EngineLeftReverse, 0);
+    analogWrite(_EngineRight, velocidade);
+    analogWrite(_EngineRightReverse, 0);
 }
 
 void Toninho::virarDireita(int velocidade)
 {
-    analogWrite(_EngineLeft, HIGH);
-    analogWrite(_EngineLeftReverse, LOW);
-    analogWrite(_EngineRight, LOW);
-    analogWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, velocidade);
+    analogWrite(_EngineLeftReverse, 0);
+    analogWrite(_EngineRight, 0);
+    analogWrite(_EngineRightReverse, 0);
 }
 
 void Toninho::virarEsquerdaTras(int velocidade)
 {
-    analogWrite(_EngineLeft, LOW);
-    analogWrite(_EngineLeftReverse, LOW);
-    analogWrite(_EngineRight, LOW);
-    analogWrite(_EngineRightReverse, HIGH);
+    analogWrite(_EngineLeft, 0);
+    analogWrite(_EngineLeftReverse, 0);
+    analogWrite(_EngineRight, 0);
+    analogWrite(_EngineRightReverse, velocidade);
 }
 
 void Toninho::virarDireitaTras(int velocidade)
 {
-    analogWrite(_EngineLeft, LOW);
-    analogWrite(_EngineLeftReverse, HIGH);
-    analogWrite(_EngineRight, LOW);
-    analogWrite(_EngineRightReverse, LOW);
+    analogWrite(_EngineLeft, 0);
+    analogWrite(_EngineLeftReverse, velocidade);
+    analogWrite(_EngineRight, 0);
+    analogWrite(_EngineRightReverse, 0);
 }
 
 void Toninho::girarHorario(int velocidade, int numGiros)
 {
+    int i;
 
-    while (numGiros < 5)
+    while (i < numGiros)
     {
         analogWrite(_EngineLeft, velocidade);
         analogWrite(_EngineLeftReverse, 0);
@@ -97,42 +90,15 @@ void Toninho::girarHorario(int velocidade, int numGiros)
 
 void Toninho::girarAntiHorario(int velocidade, int numGiro)
 {
-    while (numGiro)
+    int i;
+    
+    while (i < numGiro)
     {
         analogWrite(_EngineLeft, 0);
         analogWrite(_EngineLeftReverse, velocidade);
         analogWrite(_EngineRight, velocidade);
         analogWrite(_EngineRightReverse, 0);
+
+        i++
     }
 }
-
-/*boolean Toninho::updateDirection()
-{
-    int inputValue = analogRead(_directionInputPin);
-
-    if (inputValue < 511 - _directionInputMargin)
-    {
-        virarEsquerda();
-        return true;
-    }
-
-    if (inputValue > 511 + _directionInputMargin)
-    {
-        virarDireita();
-        return true;
-    }
-
-    return false;
-}
-
-void Toninho::acelerar(int intensity)
-{
-    analogWrite(_speedOutputPin, intensity);
-}
-
-int Toninho::getSpeedIntensity()
-{
-    int inputValue = analogRead(_speedInputPin);
-    float proportion = inputValue / 1024.0;
-    return (int)(proportion * 255.0);
-}*/

@@ -17,19 +17,16 @@ public:
     void virarDireita();
     void virarEsquerdaTras();
     void virarDireitaTras();
-    //boolean updateDirection();
-    //void acelerar(int intensity);
-    //int getSpeedIntensity();
+    void girarHorario();
+    void girarAntiHorario();
+
 
 private:
     int _EngineLeft;
     int _EngineLeftReverse;
     int _EngineRight;
     int _EngineRightReverse;
-    //int _speedInputPin;
-    //int _speedOutputPin;
-    //int _directionInputPin;
-    //int _directionInputMargin;
+
 };
 
 #endif
