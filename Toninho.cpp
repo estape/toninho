@@ -7,10 +7,6 @@ Toninho::Toninho(int EngineLeft, int EngineLeftReverse, int EngineRight, int Eng
     _EngineLeftReverse = EngineLeftReverse;
     _EngineRight = EngineRight;
     _EngineRightReverse = EngineRightReverse;
-    //_speedInputPin = speedInputPin;
-    //_speedOutputPin = speedOutputPin;
-    //_directionInputPin = directionInputPin;
-    //_directionInputMargin = directionInputMargin;
 }
 
 void Toninho::ligar()
@@ -19,9 +15,6 @@ void Toninho::ligar()
     pinMode(_EngineLeftReverse, OUTPUT);
     pinMode(_EngineRight, OUTPUT);
     pinMode(_EngineRightReverse, OUTPUT);
-    //pinMode(_speedInputPin, INPUT);
-    //pinMode(_speedOutputPin, OUTPUT);
-    //pinMode(_directionInputPin, INPUT);
 }
 
 void Toninho::moverFrente()
@@ -40,7 +33,6 @@ void Toninho::moverTras()
     digitalWrite(_EngineRightReverse, HIGH);
 }
 
-// Não vai deixar "dois positivos"?
 void Toninho::ativarFreios()
 {
     digitalWrite(_EngineLeft, HIGH);
@@ -89,33 +81,46 @@ void Toninho::virarDireitaTras()
     digitalWrite(_EngineRightReverse, LOW);
 }
 
-/*boolean Toninho::updateDirection()
+void Toninho::girarHorario(int numGiros)
 {
-    int inputValue = analogRead(_directionInputPin);
+    int i;
+    unsigned long tempoInicial; // variável para armazenar o tempo inicial
+    unsigned long tempoFinal; // variável para armazenar o tempo final
+    unsigned long duracao = 1000000; // variável para armazenar a duração da rotação em microssegundos (1 segundo = 1000000 microssegundos)
 
-    if (inputValue < 511 - _directionInputMargin)
+    while (i < numGiros)
     {
-        virarEsquerda();
-        return true;
+        tempoInicial = micros(); // pega o tempo inicial
+        tempoFinal = tempoInicial + duracao; // calcula o tempo final
+        while (micros() < tempoFinal) // enquanto o tempo atual for menor que o tempo final
+        {
+            digitalWrite(_EngineLeft, HIGH); // liga o motor esquerdo para frente
+            digitalWrite(_EngineLeftReverse, LOW); // desliga o motor esquerdo para trás
+            digitalWrite(_EngineRight, LOW); // desliga o motor direito para frente
+            digitalWrite(_EngineRightReverse, HIGH); // liga o motor direito para trás
+        }
+        i++;
     }
-
-    if (inputValue > 511 + _directionInputMargin)
-    {
-        virarDireita();
-        return true;
-    }
-
-    return false;
 }
 
-void Toninho::acelerar(int intensity)
+void Toninho::girarAntiHorario(int numGiros)
 {
-    analogWrite(_speedOutputPin, intensity);
-}
+    int i;
+    unsigned long tempoInicial; // variável para armazenar o tempo inicial
+    unsigned long tempoFinal; // variável para armazenar o tempo final
+    unsigned long duracao = 1000000; // variável para armazenar a duração da rotação em microssegundos (1 segundo = 1000000 microssegundos)
 
-int Toninho::getSpeedIntensity()
-{
-    int inputValue = analogRead(_speedInputPin);
-    float proportion = inputValue / 1024.0;
-    return (int)(proportion * 255.0);
-}*/
+    while (i < numGiros)
+    {
+        tempoInicial = micros(); // pega o tempo inicial
+        tempoFinal = tempoInicial + duracao; // calcula o tempo final
+        while (micros() < tempoFinal) // enquanto o tempo atual for menor que o tempo final
+        {
+            digitalWrite(_EngineLeft, LOW); // liga o motor esquerdo para frente
+            digitalWrite(_EngineLeftReverse, HIGH); // desliga o motor esquerdo para trás
+            digitalWrite(_EngineRight, HIGH); // desliga o motor direito para frente
+            digitalWrite(_EngineRightReverse, LOW); // liga o motor direito para trás
+        }
+        i++;
+    }
+}
