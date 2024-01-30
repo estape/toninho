@@ -17,87 +17,87 @@ void Toninho::ligar()
     pinMode(_EngineRightReverse, OUTPUT);
 }
 
-void Toninho::moverFrente(int velocidade)
+void Toninho::moverFrente()
 {
-    analogWrite(_EngineLeft, velocidade);
-    analogWrite(_EngineLeftReverse, 0);
-    analogWrite(_EngineRight, velocidade);
-    analogWrite(_EngineRightReverse, 0);
+    digitalWrite(_EngineLeft, HIGH);
+    digitalWrite(_EngineLeftReverse, LOW);
+    digitalWrite(_EngineRight, HIGH);
+    digitalWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::moverTras(int velocidade)
+void Toninho::moverTras()
 {
-    analogWrite(_EngineLeft, 0);
-    analogWrite(_EngineLeftReverse, velocidade);
-    analogWrite(_EngineRight, 0);
-    analogWrite(_EngineRightReverse, velocidade);
+    digitalWrite(_EngineLeft, LOW);
+    digitalWrite(_EngineLeftReverse, HIGH);
+    digitalWrite(_EngineRight, LOW);
+    digitalWrite(_EngineRightReverse, HIGH);
 }
 
 void Toninho::ativarFreios()
 {
-    analogWrite(_EngineLeft, 0);
-    analogWrite(_EngineLeftReverse, 0);
-    analogWrite(_EngineRight, 0);
-    analogWrite(_EngineRightReverse, 0);
+    digitalWrite(_EngineLeft, LOW);
+    digitalWrite(_EngineLeftReverse, LOW);
+    digitalWrite(_EngineRight, LOW);
+    digitalWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::virarEsquerda(int velocidade)
+void Toninho::virarEsquerda()
 {
-    analogWrite(_EngineLeft, 0);
-    analogWrite(_EngineLeftReverse, 0);
-    analogWrite(_EngineRight, velocidade);
-    analogWrite(_EngineRightReverse, 0);
+    digitalWrite(_EngineLeft, LOW);
+    digitalWrite(_EngineLeftReverse, LOW);
+    digitalWrite(_EngineRight, HIGH);
+    digitalWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::virarDireita(int velocidade)
+void Toninho::virarDireita()
 {
-    analogWrite(_EngineLeft, velocidade);
-    analogWrite(_EngineLeftReverse, 0);
-    analogWrite(_EngineRight, 0);
-    analogWrite(_EngineRightReverse, 0);
+    digitalWrite(_EngineLeft, HIGH);
+    digitalWrite(_EngineLeftReverse, LOW);
+    digitalWrite(_EngineRight, LOW);
+    digitalWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::virarEsquerdaTras(int velocidade)
+void Toninho::virarEsquerdaTras()
 {
-    analogWrite(_EngineLeft, 0);
-    analogWrite(_EngineLeftReverse, 0);
-    analogWrite(_EngineRight, 0);
-    analogWrite(_EngineRightReverse, velocidade);
+    digitalWrite(_EngineLeft, LOW);
+    digitalWrite(_EngineLeftReverse, LOW);
+    digitalWrite(_EngineRight, LOW);
+    digitalWrite(_EngineRightReverse, HIGH);
 }
 
-void Toninho::virarDireitaTras(int velocidade)
+void Toninho::virarDireitaTras()
 {
-    analogWrite(_EngineLeft, 0);
-    analogWrite(_EngineLeftReverse, velocidade);
-    analogWrite(_EngineRight, 0);
-    analogWrite(_EngineRightReverse, 0);
+    digitalWrite(_EngineLeft, LOW);
+    digitalWrite(_EngineLeftReverse, HIGH);
+    digitalWrite(_EngineRight, LOW);
+    digitalWrite(_EngineRightReverse, LOW);
 }
 
-void Toninho::girarHorario(int velocidade, int numGiros)
+void Toninho::girarHorario(int HIGH, int numGiros)
 {
     int i;
 
     while (i < numGiros)
     {
-        analogWrite(_EngineLeft, velocidade);
-        analogWrite(_EngineLeftReverse, 0);
-        analogWrite(_EngineRight, 0);
-        analogWrite(_EngineRightReverse, velocidade);
+        digitalWrite(_EngineLeft, HIGH);
+        digitalWrite(_EngineLeftReverse, LOW);
+        digitalWrite(_EngineRight, LOW);
+        digitalWrite(_EngineRightReverse, HIGH);
 
         i++;
     }
 }
 
-void Toninho::girarAntiHorario(int velocidade, int numGiro)
+void Toninho::girarAntiHorario(int HIGH, int numGiro)
 {
     int i;
     
     while (i < numGiro)
     {
-        analogWrite(_EngineLeft, 0);
-        analogWrite(_EngineLeftReverse, velocidade);
-        analogWrite(_EngineRight, velocidade);
-        analogWrite(_EngineRightReverse, 0);
+        digitalWrite(_EngineLeft, LOW);
+        digitalWrite(_EngineLeftReverse, HIGH);
+        digitalWrite(_EngineRight, HIGH);
+        digitalWrite(_EngineRightReverse, LOW);
 
         i++
     }
