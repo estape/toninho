@@ -72,33 +72,3 @@ void Toninho::virarDireitaTras()
     digitalWrite(_EngineRight, LOW);
     digitalWrite(_EngineRightReverse, LOW);
 }
-
-void Toninho::girarHorario(int HIGH, int numGiros)
-{
-    int i;
-
-    while (i < numGiros)
-    {
-        digitalWrite(_EngineLeft, HIGH);
-        digitalWrite(_EngineLeftReverse, LOW);
-        digitalWrite(_EngineRight, LOW);
-        digitalWrite(_EngineRightReverse, HIGH);
-
-        i++;
-    }
-}
-
-void Toninho::girarAntiHorario(int HIGH, int numGiro)
-{
-    int i;
-    
-    while (i < numGiro)
-    {
-        digitalWrite(_EngineLeft, LOW);
-        digitalWrite(_EngineLeftReverse, HIGH);
-        digitalWrite(_EngineRight, HIGH);
-        digitalWrite(_EngineRightReverse, LOW);
-
-        i++
-    }
-}
