@@ -6,7 +6,7 @@
 class Toninho
 {
 public:
-    Toninho(int EngineLeft, int EngineLeftReverse, int EngineRight, int EngineRightReverse);
+    Toninho(int AIN1, int AIN2, int BIN1, int BIN2, int PWMA, int PWMB, int ledBlue, int ledRed, int infraRed);
 
     void ligar();
     void moverFrente();
@@ -17,15 +17,17 @@ public:
     void virarDireita();
     void virarEsquerdaTras();
     void virarDireitaTras();
-    void girarHorario();
-    void girarAntiHorario();
-
 
 private:
-    int _EngineLeft;
-    int _EngineLeftReverse;
-    int _EngineRight;
-    int _EngineRightReverse;
+    int _AIN1;
+    int _AIN2;
+    int _BIN1;
+    int _BIN2;
+    int _PWMA;
+    int _PWMB;
+    int _ledBlue;
+    int _ledRed;
+    int _infraRed;
 
 };
 
