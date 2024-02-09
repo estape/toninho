@@ -1,126 +1,111 @@
 #include "Arduino.h"
 #include "Toninho.h"
 
-Toninho::Toninho(int EngineLeft, int EngineLeftReverse, int EngineRight, int EngineRightReverse)
+Toninho::Toninho(int AIN1, int AIN2, int BIN1, int BIN2, int PWMA, int PWMB, int ledBlue, int ledRed, int infraRed)
 {
-    _EngineLeft = EngineLeft;
-    _EngineLeftReverse = EngineLeftReverse;
-    _EngineRight = EngineRight;
-    _EngineRightReverse = EngineRightReverse;
+    _AIN1 = AIN1;
+    _AIN2 = AIN2;
+    _BIN1 = BIN1;
+    _BIN2 = BIN2;
+    _PWMA = PWMA;
+    _PWMB = PWMB;
+
+    //leds
+    _ledBlue = ledBlue;
+    _ledRed = ledRed;
+
+    //infrared
+    _infraRed = infraRed;
 }
 
 void Toninho::ligar()
 {
-    pinMode(_EngineLeft, OUTPUT);
-    pinMode(_EngineLeftReverse, OUTPUT);
-    pinMode(_EngineRight, OUTPUT);
-    pinMode(_EngineRightReverse, OUTPUT);
+    pinMode(_AIN1, OUTPUT);
+    pinMode(_AIN2, OUTPUT);
+    pinMode(_BIN1, OUTPUT);
+    pinMode(_BIN2, OUTPUT);
+    pinMode(_PWMA, OUTPUT);
+    pinMode(_PWMB, OUTPUT);
+    
+    //leds
+    pinMode(_ledBlue, OUTPUT);
+    pinMode(_ledRed, OUTPUT);
+
+    //infrared
+    pinMode(_infraRed, INPUT);
+}
+
+void Toninho::infraInput()
+{
+
 }
 
 void Toninho::moverFrente()
 {
-    digitalWrite(_EngineLeft, HIGH);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, HIGH);
-    digitalWrite(_EngineRightReverse, LOW);
+    digitalWrite(_AIN1, HIGH);
+    digitalWrite(_AIN2, LOW);
+    digitalWrite(_BIN1, HIGH);
+    digitalWrite(_BIN2, LOW);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
 
-void Toninho::moverTras()   
+void Toninho::moverTras()
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, HIGH);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, HIGH);
+    digitalWrite(_AIN1, LOW);
+    digitalWrite(_AIN2, HIGH);
+    digitalWrite(_BIN1, LOW);
+    digitalWrite(_BIN2, HIGH);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
 
 void Toninho::ativarFreios()
 {
-    digitalWrite(_EngineLeft, HIGH);
-    digitalWrite(_EngineLeftReverse, HIGH);
-    digitalWrite(_EngineRight, HIGH);
-    digitalWrite(_EngineRightReverse, HIGH);
-}
-
-void Toninho::desligarMotores()
-{
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, LOW);
+    digitalWrite(_AIN1, HIGH);
+    digitalWrite(_AIN2, HIGH);
+    digitalWrite(_BIN1, HIGH);
+    digitalWrite(_BIN2, HIGH);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
 
 void Toninho::virarEsquerda()
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, HIGH);
-    digitalWrite(_EngineRightReverse, LOW);
+    digitalWrite(_AIN1, LOW);
+    digitalWrite(_AIN2, LOW);
+    digitalWrite(_BIN1, HIGH);
+    digitalWrite(_BIN2, LOW);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
 
 void Toninho::virarDireita()
 {
-    digitalWrite(_EngineLeft, HIGH);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, LOW);
+    digitalWrite(_AIN1, HIGH);
+    digitalWrite(_AIN2, LOW);
+    digitalWrite(_BIN1, LOW);
+    digitalWrite(_BIN2, LOW);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
 
 void Toninho::virarEsquerdaTras()
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, LOW);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, HIGH);
+    digitalWrite(_AIN1, LOW);
+    digitalWrite(_AIN2, LOW);
+    digitalWrite(_BIN1, LOW);
+    digitalWrite(_BIN2, HIGH);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
 
 void Toninho::virarDireitaTras()
 {
-    digitalWrite(_EngineLeft, LOW);
-    digitalWrite(_EngineLeftReverse, HIGH);
-    digitalWrite(_EngineRight, LOW);
-    digitalWrite(_EngineRightReverse, LOW);
-}
-
-void Toninho::girarHorario(int numGiros)
-{
-    int i;
-    unsigned long tempoInicial; // variável para armazenar o tempo inicial
-    unsigned long tempoFinal; // variável para armazenar o tempo final
-    unsigned long duracao = 1000000; // variável para armazenar a duração da rotação em microssegundos (1 segundo = 1000000 microssegundos)
-
-    while (i < numGiros)
-    {
-        tempoInicial = micros(); // pega o tempo inicial
-        tempoFinal = tempoInicial + duracao; // calcula o tempo final
-        while (micros() < tempoFinal) // enquanto o tempo atual for menor que o tempo final
-        {
-            digitalWrite(_EngineLeft, HIGH); // liga o motor esquerdo para frente
-            digitalWrite(_EngineLeftReverse, LOW); // desliga o motor esquerdo para trás
-            digitalWrite(_EngineRight, LOW); // desliga o motor direito para frente
-            digitalWrite(_EngineRightReverse, HIGH); // liga o motor direito para trás
-        }
-        i++;
-    }
-}
-
-void Toninho::girarAntiHorario(int numGiros)
-{
-    int i;
-    unsigned long tempoInicial; // variável para armazenar o tempo inicial
-    unsigned long tempoFinal; // variável para armazenar o tempo final
-    unsigned long duracao = 1000000; // variável para armazenar a duração da rotação em microssegundos (1 segundo = 1000000 microssegundos)
-
-    while (i < numGiros)
-    {
-        tempoInicial = micros(); // pega o tempo inicial
-        tempoFinal = tempoInicial + duracao; // calcula o tempo final
-        while (micros() < tempoFinal) // enquanto o tempo atual for menor que o tempo final
-        {
-            digitalWrite(_EngineLeft, LOW); // liga o motor esquerdo para frente
-            digitalWrite(_EngineLeftReverse, HIGH); // desliga o motor esquerdo para trás
-            digitalWrite(_EngineRight, HIGH); // desliga o motor direito para frente
-            digitalWrite(_EngineRightReverse, LOW); // liga o motor direito para trás
-        }
-        i++;
-    }
+    digitalWrite(_AIN1, LOW);
+    digitalWrite(_AIN2, HIGH);
+    digitalWrite(_BIN1, LOW);
+    digitalWrite(_BIN2, LOW);
+    digitalWrite(_PWMA, HIGH);
+    digitalWrite(_PWMB, HIGH);
 }
